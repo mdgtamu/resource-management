@@ -138,7 +138,7 @@
 
 
 	/* Function: get_user_id()
-	   Finds and returns the user_id key associated with the given username in the 'Users' table
+	   Gets the user_id key associated with the given username in the 'Users' table
 	   
 	   Parameters:
 	   $username - $username
@@ -154,7 +154,7 @@
 	}
 	
 	/* Function: get_username()
-	   Finds and returns the NetID with the given user_id
+	   Gets the NetID with the given user_id
 	 
 	   Parameters:
 	   $user_id - user_id key stored in the database table 'Users'
@@ -171,7 +171,7 @@
 	}
 	
 	/* Function: get_host_id()
-	   Finds and returns the host_id key associated with the given host name in the 'Hosts' table
+	   Gets the host_id key associated with the given host name in the 'Hosts' table
 	   
 	   Parameters:
 	   $hostname - plaintext name of the host (eg. 'Orion', 'Medusa')
@@ -188,7 +188,7 @@
 	}
 	
 	/* Function: get_hostname()
-	   Finds and returns the name of the host with the given host_id
+	   Gets the name of the host with the given host_id
 	   
 	   Parameters:
 	   $host_id - host_id key stored in the database table 'Hosts'
@@ -204,7 +204,7 @@
 	}
 	
 	/* Function: get_ext_host_id()
-	   finds and returns the host_id key associated with the given host name in the 'External_Hosts' table
+	   Gets the host_id key associated with the given host name in the 'External_Hosts' table
 	 
 	   Parameters:
 	   $exthostname - plaintext name of the external host (eg. 'Orion', 'Medusa')
@@ -221,7 +221,7 @@
 	}
 	
 	/* Function: get_ext_host_admin()
-	   finds and returns the admin_contact field for the given external_host_id
+	   Gets the admin_contact field for the given external_host_id
 	   
 	   Parameters:
 	   $ext_host_id - external_host_id key stored in the database table 'External_Hosts'
@@ -237,7 +237,7 @@
 	}
 	
 	/* Function: get_exthostname()
-	   finds and returns the name of the host with the given host_id
+	   Gets the name of the host with the given host_id
 	   
 	   Parameters:
 	   $ext_host_id - host_id key stored in the database table 'External_Hosts'
@@ -253,7 +253,7 @@
 	}
 	
 	/* Function: get_group_id()
-	   finds and returns the group_id key associated with the given group name in the 'Groups' table
+	   Gets the group_id key associated with the given group name in the 'Groups' table
 	   
 	   Parameters:
 	   $groupname - plaintext name of the group (eg. 'export control', 'AERO')
@@ -269,7 +269,7 @@
 	}
 	
 	/* Function: get_groupname()
-	   finds and returns the name of the group with the given group_id
+	   Gets the name of the group with the given group_id
 	   
 	   Parameters:
 	   $group_id - group_id key stored in the database table 'Groups'
@@ -285,7 +285,7 @@
 	}
 	
 	/* Function: get_software_id()
-	   finds and returns the software_id key associated with the given software name in the 'Software' table
+	   Gets the software_id key associated with the given software name in the 'Software' table
 	   
 	   Parameters:
 	   $softwarename - plaintext name of the software (eg. 'COMD')
@@ -301,7 +301,7 @@
 	}
 	
 	/* Function: get_softwarename()
-	   finds and returns the name of the software with the given software_id
+	   Gets the name of the software with the given software_id
 	   
 	   Parameters:
 	   $software_id - software_id key stored in the database table 'Software'
@@ -317,7 +317,7 @@
 	}
 	
 	/* Function: get_notification_type_id()
-	   finds and returns the notification_type_id key associated with the given notification type in the 'Notification_Type' table
+	   Gets the notification_type_id key associated with the given notification type in the 'Notification_Type' table
 	   
 	   Parameters:
 	   $notification_type - plaintext name of the notification type (eg. 'admin', 'general')
@@ -333,7 +333,7 @@
 	}
 	
 	/* Function: get_notification_type()
-	   finds and returns the name of the notification type with the given notification_type_id
+	   Gets the name of the notification type with the given notification_type_id
 	 
 	   Parameters:
 	   $notification_type_id - notification_type_id key stored in the database table 'Notification_Type'
@@ -349,7 +349,7 @@
 	}
 	
 	/* Function: get_app_settings_id()
-	   finds and returns the app_settings_id key associated with the given application setting in the 'App_Settings' table
+	   Gets the app_settings_id key associated with the given application setting in the 'App_Settings' table
 	   
 	   Parameters:
 	   $settingname - plaintext name of the application setting (eg. 'notify delay', 'warning period')
@@ -365,7 +365,7 @@
 	}
 	
 	/* Function: get_app_settings_name()
-	   finds and returns the name of the application setting with the given app_settings_id key
+	   Gets the name of the application setting with the given app_settings_id key
 	   
 	   Parameters:
 	   $setting_id - app_settings_id key stored in the database table 'App_Settings'
@@ -381,7 +381,7 @@
 	}
 	
 	/* Function: get_research_desc_id()
-	   finds and returns the research_desc_id key for the research description associated with the given user in the 'User_Research_Description' table
+	   Gets the research_desc_id key for the research description associated with the given user in the 'User_Research_Description' table
 	
 	   Parameters:
 	   $username - $username
@@ -398,7 +398,7 @@
 	}
 	
 	/* Function: get_department_id_from_code()
-	   returns the department_id key associated with the given department_code in the 'Department' table
+	   Gets the department_id key associated with the given department_code in the 'Department' table
 	   
 	   Parameters:
 	   $department_code - shortcode for department (eg. 'CHEM', 'AERO')
@@ -414,7 +414,7 @@
 	}
 	
 	/* Function: get_department_id_from_name()
-	   returns the department_id key associated with the given department_name in the 'Department' table
+	   Gets the department_id key associated with the given department_name in the 'Department' table
 	 
 	   Parameters:
 	   $department_name - plaintext name of department (eg. 'Chemistry', 'Aerospace Engineering')
@@ -430,7 +430,7 @@
 	}
 	
 	/* Function: get_department_code_from_name()
-	   returns the department_code shortcode associated with the given department_name in the 'Department' table
+	   Gets the department_code shortcode associated with the given department_name in the 'Department' table
 	   
 	   Parameters:
 	   $department_name - plaintext name of department (eg. 'Chemistry', 'Aerospace Engineering')
@@ -446,7 +446,7 @@
 	}
 	
 	/* Function: get_department_code_from_id()
-	   returns the department_code shortcode associated with the given department_id key in the 'Department' table
+	   Gets the department_code shortcode associated with the given department_id key in the 'Department' table
 	   
 	   Parameters:
 	   $department_id - department_id key stored in the database table 'Department'
@@ -462,7 +462,7 @@
 	}
 	
 	/* Function: get_department_name_from_code()
-	   returns the name of the department associated with the given department_code shortcode in the 'Department' table
+	   Gets the name of the department associated with the given department_code shortcode in the 'Department' table
 	   
 	   Parameters:
 	   $department_code - shortcode name of department (eg. 'CHEM', 'AERO')
@@ -478,7 +478,7 @@
 	}
 	
 	/* Function: get_department_name_from_id()
-	   returns the name of the department associated with the given department_id key in the 'Department' table
+	   Gets the name of the department associated with the given department_id key in the 'Department' table
 	   
 	   Parameters:
 	   $department_id - department_id key in the database table 'Department'
@@ -494,7 +494,7 @@
 	}
 
 	/* Function: get_role_id()
-	   returns role_id key stored in the 'Roles' table
+	   Gets role_id key stored in the 'Roles' table
 	   
 	   Parameters:
 	   $role_name - string name of role
@@ -510,7 +510,7 @@
 	}
 
 	/* Function: get_role_name()
-	   returns role_name stored in the 'Roles' table
+	   Gets role_name stored in the 'Roles' table
 	   
 	   Parameters:
 	   $role_id - int id key of role
@@ -526,7 +526,7 @@
 	}
 
 	/* Function: get_preference_id()
-	   returns preference_id key stored in the 'User_Preferences' table
+	   Gets preference_id key stored in the 'User_Preferences' table
 	   
 	   Parameters:
 	   $preference_name - string name of preference
@@ -542,7 +542,7 @@
 	}
 
 	/* Function: get_preference_name()
-	   returns preference name stored in the 'User_Preferences' table
+	   Gets preference name stored in the 'User_Preferences' table
 	   
 	   Parameters:
 	   $preference_id - int id key of preference
@@ -593,7 +593,7 @@
 	}
 	
 	/* Function: archive_research_description()
-	   archives the current research description of the given user
+	   Archives the current research description of the given user
 	   
 	   Parameters:
 	   $username - NetID of the user
@@ -615,7 +615,7 @@
 	}
 	
 	/* Function: get_host_status()
-	   searches the 'User_Host_MAP' table for a match of the given user and host
+	   Gets the status id from the 'User_Host_MAP' table based on the given user and host
 	   
 	   Parameters:
 	   $username - NetID of the user
@@ -640,7 +640,7 @@
 	}
 	
 	/* Function: get_group_status_id()
-	   searches the 'User_Group_MAP' table for a match of the given user and group
+	   Gets the status id from the 'User_Group_MAP' based on the given user and group
 	   
 	   Parameters:
 	   $username - NetID or ChemID of the user
@@ -665,7 +665,7 @@
 	}
 	
 	/* Function: remove_user_host_map()
-	   removes a mapping between the given user and host on the 'User_Host_MAP' database table
+	   Removes a mapping between the given user and host on the 'User_Host_MAP' database table
 	   
 	   Parameters:
 	   $username - NetID or ChemID of user
@@ -695,7 +695,7 @@
 	}
 	
 	/* Function: remove_host_mappings()
-	   removes all mappings in the 'User_Host_MAP' database table associated with the given host
+	   Removes all mappings in the 'User_Host_MAP' database table associated with the given host
 	   
 	   Parameters:
 	   $hostname - plaintext name of host
@@ -716,7 +716,7 @@
 	/*------------------------------------------------------------------------------------------------*/
 	
 	/* Function: check_TOS()
-	   searches the 'User_TOS_MAP' table for a match between the user and the TOS. If a match is found, compares the accept_date of the MAP with the create_date of the TOS
+	   Checks the 'User_TOS_MAP' table for a match between the user and the TOS. If a match is found, compares the accept_date of the MAP with the create_date of the TOS
 	 
 	   Parameters:
 	   $username - NetID of the user
@@ -754,7 +754,7 @@
 	}
 	
 	/* Function: get_TOS()
-	   returns the Terms of Service text for the given TOS Name
+	   Gets the Terms of Service text for the given TOS Name
 	   
 	   Parameters:
 	   $tosname = plaintext name of the Terms of Service
@@ -771,7 +771,7 @@
 	}
 	
 	/* Function: accept_TOS()
-	   checks 'User_TOS_MAP' table for an association between the user and the TOS. Ff an association exists, updates the accept_date. If no association exists, creates an entry.
+	   Updates accept_date in the 'User_TOS_MAP' table if an association between the user and the TOS. If no association exists, creates an entry.
 	 
 	   Parameters:
 	   $username = NetID of user
@@ -830,7 +830,7 @@
 	}
 	
 	/* Function: check_research_description()
-	   checks 'User_Research_Description' table for an entry for the given user
+	   Checks 'User_Research_Description' table for an entry for the given user
 	   
 	   Parameters:
 	   $username - NetID of user
@@ -1407,7 +1407,7 @@
 	}
 	
 	/* Function: request_host_access()
-	   Attempts to add an entry to the 'User_Host_MAP' table
+	   Adds or updates the status entry in the 'User_Host_MAP' table
 	   - if no entry exists, or an entry exists with status Warning or Expired, sets status to Pending
 	   - if an entry exists with status Pending, Active, Pending-Group, Review, or Denied, returns the status_id
 	 
@@ -1417,7 +1417,7 @@
 	 
 	   Returns: 
 	   - TRUE if no entry exists, or if an entry exists with status Warning or Expired
-	   - $status_id if an entry exists with status Pending, Active, Pending-Group, Review, or Denied, returns the status_id
+	   - $status_id if an entry exists with status Pending, Active, Pending-Group, Review, or Denied
 	   - FALSE if the function fails
 	 */
 	function request_host_access($username, $hostname)
@@ -1458,15 +1458,20 @@
 		return false;
 	}
 	
-	/* request_group_access()
-	 *	parameters:
-	 *		$username = NetID or ChemID of user
-	 *		$groupname = plaintext name of group
-	 * attempts to add an entry to the 'User_Group_MAP' table
-	 * if no entry exists, sets the status to Pending-Group (default) and returns true
-	 * if an entry exists with status Warning or Expired, sets status to Pending-Group and returns true
-	 * if an entry exists with status Pending, Active, Pending-Group, Review, or Denied, returns the status_id
-	 * if the function fails, returns false
+	/* Function: request_group_access()
+	   Adds or updates the status entry in the 'User_Group_MAP' table.
+	   
+	   - If no entry exists, or an entry exists with status Warning or Expired, sets status to Pending-Group
+	   - If an entry exists with status Pending, Active, Pending-Group, Review, or Denied, returns the status_id
+	 
+	   Parameters:
+	   $username - NetID of user
+	   $groupname - plaintext name of group
+	 
+	   Returns: 
+	   - TRUE if no entry exists, or if an entry exists with status Warning or Expired
+	   - $status_id if an entry exists with status Pending, Active, Pending-Group, Review, or Denied
+	   - FALSE if the function fails
 	 */
 	function request_group_access($username, $groupname)
 	{
