@@ -1,0 +1,31 @@
+#social_peek {
+	/*margin-right: 25px;
+	margin-left: 0px;
+	margin-top: 47px;
+	padding: 0px;
+	float: right;
+	margin-bottom: 0px;*/
+}
+#social_peek ul li {
+	display: inline;
+}
+#social_peek ul a {
+	width: 36px;
+	text-decoration: none;
+	/*float: left;*/
+	background-repeat: no-repeat;
+	background-position: center 6px;
+	height: 34px;
+}
+#social_peek ul li a:hover {
+	background-position: center 0px;
+}
+#social_peek ul #facebook a {
+	background-image: url(../ico/social/facebook_32.png);
+}
+#social_peek ul #linkedin a {
+	background-image: url(../ico/social/linkedin_32.png);
+}
+#social_peek ul #twitter a {
+	background-image: url(../ico/social/twitter_32.png);
+}
