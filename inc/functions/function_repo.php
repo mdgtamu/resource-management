@@ -1053,7 +1053,7 @@
 	   Gets a list of preferences user has selected
 	 
 	   Parameters:
-	   $username - NetID or ChemID of user
+	   $username - NetID of user
 	 
 	   Returns:
 	   - $host_list
@@ -1077,7 +1077,7 @@
 	   Gets a list of roles given to user
 	 
 	   Parameters:
-	   $username - user's NetID or ChemID
+	   $username - NetID of user
 	 
 	   Returns:
 	   - $role_list 
@@ -1301,7 +1301,7 @@
 	}
 	
 	/* Function: activate_access()
-	   Calls adjust_access_status() using "active" as the access_status
+	   Calls adjust_access_status() using 'active' as the access_status
 	   
 	   Parameters:
 	   $username - NetID of user
@@ -1317,7 +1317,7 @@
 	}
 	
 	/* Function: warn_access()
-	   Calls adjust_access_status() using "warning" as the access_status
+	   Calls adjust_access_status() using 'warning' as the access_status
 	   
 	   Parameters:
 	   $username - NetID of user
@@ -1515,15 +1515,19 @@
 	/* Group: Administrator/Sponsor/Sponsor Manager Functions */
 	/*------------------------------------------------------------------------------------------------*/
 	
-	/* adjust_sponsorship()
-	 *	parameters:
-	 *		$username_user = NetID or ChemID of the user to be sponsored
-	 *		$username_sponsor = NetID or ChemID of the sponsor
-	 *		$sponsorship_status = string defining action ("approve", "deny", "create", "renew", "revoke")
-	 * if change is successful, returns true
-	 * if change fails, returns false
-	 * if no entry to adjust and not attempting "create", returns null
-	 * if "create" and entry exists, returns entry create_date
+	/* Function: adjust_sponsorship()
+	   Accepts calls from other functions in order to modify the 'Sponsorship_MAP' table
+	 
+	   Parameters:
+	   $username_user - NetID of the user to be sponsored
+	   $username_sponsor - NetID of the sponsor
+	   $sponsorship_status - string defining action ("approve", "deny", "create", "renew", "revoke")
+	 
+	   Returns:
+	   - TRUE if successful
+	   - FALSE if unsuccessful
+	   - NULL if no entry to adjust and not attempting "create"
+	   - $create_date['create_date'] if attempting "create" when entry exists 
 	 */
 	function adjust_sponsorship($username_user, $username_sponsor, $username_mod, $sponsorship_status, $start_date, $end_date)
 	{
@@ -1563,67 +1567,101 @@
 		return false;		
 	}
 	
-	/* approve_sponsorship()
-	 * passes through to adjust_sponsorship() with the "approve" sponsorship_status
-	 * returns true if change is successful
-	 * returns false if change fails
-	 * if no existing entry, returns null
+	/* Function: approve_sponsorship()
+	   Calls adjust_sponsorship() using 'approve' as the sponsorship_status
+	 
+	   Parameters:
+	   $username_user - NetID of the user to be sponsored
+	   $username_sponsor - NetID of the sponsor
+	 
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
+	   - NULL if no existing entry
 	 */
 	function approve_sponsorship($username_user, $username_sponsor)
 	{
 		return adjust_sponsorship($username_user, $username_sponsor, "approve");
 	}
 	
-	/* deny_sponsorship()
-	 * passes through to adjust_sponsorship() with the "deny" sponsorship_status
-	 * returns true if change is successful
-	 * returns false if change fails
-	 * if no existing entry, returns null
+	/* Function: deny_sponsorship()
+	   Calls adjust_sponsorship() using 'deny' as the sponsorship_status
+	   
+	   Parameters:
+	   $username_user - NetID of the user to be sponsored
+	   $username_sponsor - NetID of the sponsor
+	   
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
+	   - NULL if no existing entry
 	 */
 	function deny_sponsorship($username_user, $username_sponsor)
 	{
 		return adjust_sponsorship($username_user, $username_sponsor, "deny");
 	}
 	
-	/* create_sponsorship()
-	 * passes through to adjust_sponsorship() with the "create" sponsorship_status
-	 * returns true if change is successful
-	 * returns false if change fails
-	 * if entry already exists, returns entry create_date
+	/* Function: create_sponsorship()
+	   Calls adjust_sponsorship() using 'create' as the sponsorship_status
+	 
+	   Parameters:
+	   $username_user - NetID of the user to be sponsored
+	   $username_sponsor - NetID of the sponsor
+	   
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
+	   - $create_date if entry already exists
 	 */
 	function create_sponsorship($username_user, $username_sponsor)
 	{
 		return adjust_sponsorship($username_user, $username_sponsor, "create");
 	}
 	
-	/* renew_sponsorship()
-	 * passes through to adjust_sponsorship() with the "renew" sponsorship_status
-	 * returns true if change is successful
-	 * returns false if change fails
-	 * if no existing entry, returns null
+	/* Function: renew_sponsorship()
+	   Calls adjust_sponsorship() using 'renew' as the sponsorship_status
+	   
+	   Parameters:
+	   $username_user - NetID of the user to be sponsored
+	   $username_sponsor - NetID of the sponsor
+	   
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
+	   - NULL if no existing entry
 	 */
 	function renew_sponsorship($username_user, $username_sponsor)
 	{
 		return adjust_sponsorship($username_user, $username_sponsor, "renew");
 	}
 	
-	/* revoke_sponsorship()
-	 * passes through to adjust_sponsorship() with the "revoke" sponsorship_status
-	 * returns true if change is successful
-	 * returns false if change fails
-	 * if no existing entry, returns null
+	/* Function: revoke_sponsorship()
+	   Calls adjust_sponsorship() using 'revoke' as the sponsorship_status
+	   
+	   Parameters:
+	   $username_user - NetID of the user to be sponsored
+	   $username_sponsor - NetID of the sponsor
+	   
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
+	   - NULL if no existing entry
 	 */
 	function revoke_sponsorship($username_user, $username_sponsor)
 	{
 		return adjust_sponsorship($username_user, $username_sponsor, "revoke");
 	}
 	
-	/* get_sponsor()
-	 *	parameters:
-	 *		$username_user = NetID or ChemID of user who is sponsored
-	 * returns NetID of user's sponsor
-	 * if user has no sponsor and sponsor is required, returns false
-	 * if no sponsor is required, returns true
+	/* Function: get_sponsor()
+	    Gets NetID of user's sponsor
+	 
+	   Parameters:
+	   $username_user - NetID of sponsored user
+	   
+	   Returns:
+	   - TRUE if no sponsor required
+	   - FALSE if user has no sponsor and sponsor is required
+	   - $sponsorname - NetID of user's sponsor
 	 */
 	function get_sponsor($username_user)
 	{
@@ -1655,11 +1693,15 @@
 		}
 	}
 	
-	/* get_sponsored_users()
-	 *	parameters:
-	 *		$username_sponsor = NetID or ChemID of sponsor
-	 * returns array of NetID's for users sponsored by given user
-	 * if user does not sponsor any other users, returns false
+	/* Function: get_sponsored_users()
+	   Gets array of NetID's of users sponsored by given user
+	 
+	   Parameters:
+	   $username_sponsor - NetID of sponsor
+	 
+	   Returns:
+	   - $sponsored_users array of NetID's 
+	   - FALSE if user does not sponsor any users
 	 */
 	function get_sponsored_users($username_sponsor)
 	{
@@ -1689,15 +1731,18 @@
 	/* Group: Administrator/Sponsor Functions */
 	/*------------------------------------------------------------------------------------------------*/
 	
-	/* add_sponsor_manager()
-	 *	parameters:
-	 *		$username_manager = NetID or ChemID of user to be made a manager
-	 *		$username_sponsor = NetID or ChemID of sponsor
-	 *		$username_user = NetID or ChemID of user creating the relationship
-	 * adds the given user as a sponsor manager
-	 * if add is successful, returns true
-	 * if add fails, return false
-	 * if sponsor-manager association already exists, return the create_user_id of the creator
+	/* Function: add_sponsor_manager()
+	   Adds the given user as a sponsor manager for a sponsor
+	 
+	   Parameters:
+	   $username_manager - NetID of user to be made a manager
+	   $username_sponsor - NetID of sponsor
+	   $username_user - NetID of user creating the relationship
+	 
+	   Returns: 
+	   - TRUE if add is successful
+	   - FALSE if add fails
+	   - $creator_id['create_user_id'] if sponsor-manager association already exists
 	 */
 	function add_sponsor_manager($username_manager, $username_sponsor, $username_user)
 	{
@@ -1721,14 +1766,16 @@
 		return false;
 	}
 	
-	/* remove_sponsor_manager()
-	 *	parameters:
-	 *		$username_manager = NetID or ChemID of user to be made a manager
-	 *		$username_sponsor = NetID or ChemID of sponsor
-	 * removes the association between the manager and the sponsor
-	 * if remove is successful, returns true
-	 * if remove fails, return false
-	 * if sponsor-manager association does not exist, returns true
+	/* Function: remove_sponsor_manager()
+	   Removes the given user as a sponsor manager for a sponsor
+	 
+	   Parameters:
+	   $username_manager - NetID of user to be made a manager
+	   $username_sponsor - NetID of sponsor
+
+	   Returns: 
+	   - TRUE if add is successful, or if sponsor-manager association does not exist
+	   - FALSE if add fails
 	 */
 	function remove_sponsor_manager($username_manager, $username_sponsor)
 	{
@@ -1749,17 +1796,21 @@
 	/* Group: Administrator Functions */
 	/*------------------------------------------------------------------------------------------------*/
 	
-	/* adjust_research_description()
-	 *	parameters:
-	 *		$username = NetID or ChemID of user
-	 *		$desc_status = string defining action ("create", "modify", "approve", "deny", "expire", "comment")
-	 *		$research_description = text of the research description
-	 *		$admin_comment = comment on description made by an administrator
-	 * function for administrators to modify or approve research descriptions
-	 * comment function allows administrator to leave reasons for denial or modification
-	 * if modify is successful, returns true
-	 * if modify fails, returns false
-	 * on attempt to create existing research description, returns create_date of research description
+	/* Function: adjust_research_description()
+	   Accepts calls from other functions in order for administrators to modify or approve research descriptions
+	   
+	   $admin_comment allows administrator to leave reasons for denial or modification
+	
+	   Parameters:
+	   $username - NetID of user
+	   $desc_status - string defining action ("create", "modify", "approve", "deny", "expire", "comment")
+	   $research_description - text of the research description
+	   $admin_comment - comment on description made by an administrator
+	 
+	   Returns:
+	   - TRUE if modify is successful
+	   - FALSE if modify fails
+	   - $create_date['create_date'] create_date of research description if attempting to create existing research description
 	 */
 	function adjust_research_description($username_user, $username_admin, $desc_status, $research_description, $admin_comment)
 	{
@@ -1825,78 +1876,123 @@
 		}
 	}
 	
-	/* create_research_description()
-	 * passes through to adjust_research_description with "create" desc_status
-	 * requires a research description to be input
-	 * if change is successful, returns true
-	 * if change fails, returns false
+	/* Function: create_research_description()
+	   Calls adjust_research_description using 'create' as the desc_status
+	   
+	   Requires user input for $research_description
+	 
+	   Parameters:
+	   $username_user - NetID of user
+	   $username_admin - NetID of admin user
+	   $research_description - text of the research description
+	   
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
 	 */
 	function create_research_description($username_user, $username_admin, $research_description)
 	{
 		return adjust_research_description($username_user, $username_admin, "create", $research_description, "");
 	}
 	
-	/* modify_research_description()
-	 * passes through to adjust_research_description with "modify" desc_status
-	 * requires a research description to be input
-	 * if change is successful, returns true
-	 * if change fails, returns false
+	/* Function: modify_research_description()
+	   Calls adjust_research_description using 'modify' as the desc_status
+	   
+	   Requires user input for $research_description
+	   
+	   Parameters:
+	   $username_user - NetID of user
+	   $username_admin - NetID of admin user
+	   $research_description - text of the research description
+
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
 	 */
 	function modify_research_description($username_user, $username_admin, $research_description)
 	{
 		return adjust_research_description($username_user, $username_admin, "modify", $research_description, "");
 	}
 	
-	/* approve_research_description()
-	 * passes through to adjust_research_description with "approve" desc_status
-	 * if change is successful, returns true
-	 * if change fails, returns false
+	/* Function: approve_research_description()
+	   Calls adjust_research_description using 'approve' as the desc_status
+	     
+	   Parameters:
+	   $username_user - NetID of user
+	   $username_admin - NetID of admin user
+
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
 	 */
 	function approve_research_descripton($username_user, $username_admin)
 	{
 		return adjust_research_description($username_user, $username_admin, "approve", "", "");
 	}
 	
-	/* deny_research_description()
-	 * passes through to adjust_research_description with "deny" desc_status
-	 * if change is successful, returns true
-	 * if change fails, returns false
+	/* Function: deny_research_description()
+	   Calls adjust_research_description using 'deny' as the desc_status
+	   	   
+	   Parameters:
+	   $username_user - NetID of user
+	   $username_admin - NetID of admin user
+
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
 	 */
 	function deny_research_description($username_user, $username_admin)
 	{
 		return adjust_research_description($username_user, $username_admin, "deny", "", "");
 	}
 	
-	/* expire_research_description()
-	 * passes through to adjust_research_description with "expire" desc_status
-	 * if change is successful, returns true
-	 * if change fails, returns false
+	/* Function: expire_research_description()
+	   Calls adjust_research_description using 'expire' as the desc_status
+	   	   
+	   Parameters:
+	   $username_user - NetID of user
+	   $username_admin - NetID of admin user
+
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
 	 */
 	function expire_research_description($username_user, $username_admin)
 	{
 		return adjust_research_description($username_user, $username_admin, "expire", "", "");
 	}
 	
-	/* comment_research_description()
-	 * passes through to adjust_research_description with "comment" desc_status
-	 * requires a comment to be input
-	 * if change is successful, returns true
-	 * if change fails, returns false
+	/* Function: comment_research_description()
+	   Calls adjust_research_description using 'comment' as the desc_status
+	   
+	   Requires user input for $comment
+	   	   
+	   Parameters:
+	   $username_user - NetID of user
+	   $username_admin - NetID of admin user
+	   $comment - text of the admin's comment
+
+	   Returns:
+	   - TRUE if change is successful
+	   - FALSE if change fails
 	 */
 	function comment_research_description($username_user, $username_admin, $comment)
 	{
 		return adjust_research_description($username_user, $username_admin, "comment", "", $comment); 
 	}
 	
-	/* add_app_setting()
-	 *	parameters:
-	 *		$settingname = string giving the name of the setting
-	 *		$settingdesc = string giving a description of the setting
-	 *		$settingval_num = integer value of the setting for settings that take numbers
-	 *		$settingval_text = string value of the setting for settings that take text
-	 * adds a new setting to the 'App_Settings' table
-	 * on success, returns true
-	 * on fail, returns false
+	/* Function: add_app_setting()
+	   Accepts calls from other functions in order to add a new setting to the 'App_Settings' table
+	 
+	   Parameters:
+	   $settingname - string giving the name of the new setting
+	   $settingdesc - string giving a description of the setting
+	   $settingval_num - integer value of the setting for settings that take numbers
+	   $settingval_text - string value of the setting for settings that take text
+	   
+	   Returns:
+	   - TRUE on success
+	   - FALSE on fail
 	 */
 	function add_app_setting($settingname, $settingdesc, $settingval_num, $settingval_text)
 	{
@@ -1904,34 +2000,51 @@
 		return mysqli_query($MYSQL_connection,"INSERT INTO App_Settings (app_settings_name, app_settings_desc, app_setting_value_numerical, app_setting_value_text) VALUES ($settingname, $settingdesc, $settingval_num, $settingval_text);");
 	}
 	
-	/* add_numerical_app_setting()
-	 * passes through to add_app_setting() with settingval_text as null
-	 * on success, returns true
-	 * on failure, returns false
+	/* Function: add_numerical_app_setting()
+	   Calls add_app_setting() with settingval_text as null
+	   
+	   Parameters:
+	   $settingname - string giving the name of the new setting
+	   $settingdesc - string giving a description of the setting
+	   $settingval_num - integer value of the setting for settings that take numbers
+	 
+	   Returns:
+	   - TRUE on success
+	   - FALSE on failure
 	 */
 	function add_numerical_app_setting($settingname, $settingdesc, $settingval_num)
 	{
 		return add_app_setting($settingname, $settingdesc, $settingval_num, null);
 	}
 	
-	/* add_text_app_setting()
-	 * passes through to add_app_setting() with settingval_num as null
-	 * on success, returns true
-	 * on failure, returns false
+	/* Function: add_text_app_setting()
+	   Calls add_app_setting() with settingval_num as null
+	   
+	   Parameters:
+	   $settingname - string giving the name of the new setting
+	   $settingdesc - string giving a description of the setting
+	   $settingval_text - string value of the setting for settings that take text
+	 
+	   Returns:
+	   - TRUE on success
+	   - FALSE on failure
 	 */
 	function add_text_app_setting($settingname, $settingdesc, $settingval_text)
 	{
 		return add_app_setting($settingname, $settingdesc, null, $settingval_text);
 	}
 	
-	/* adjust_app_setting()
-	 *	parameters:
-	 *		$settingname = string giving the name of the setting
-	 *		$settingval_num = integer value of the setting for settings that take numbers
-	 *		$settingval_text = string value of the setting for settings that take text
-	 * changes the given setting to the provided parameters
-	 * on success, returns true
-	 * on failure, returns false
+	/* Function: adjust_app_setting()
+	   Accepts calls from other functions in order to adjust the given app setting in the 'App_Settings' table to the provided parameters
+	 
+	   Parameters:
+	   $settingname - string giving the name of the new setting
+	   $settingval_num - integer value of the setting for settings that take numbers
+	   $settingval_text - string value of the setting for settings that take text
+	   
+	   Returns:
+	   - TRUE on success
+	   - FALSE on fail
 	 */
 	function adjust_app_setting($settingname, $settingval_num, $settingval_text)
 	{
@@ -1940,31 +2053,47 @@
 		return mysqli_query($MYSQL_connection,"UPDATE App_Settings SET app_setting_value_numerical=$settingval_num, app_setting_value_text=$settingval_text WHERE app_settings_id=$setting_id;");
 	}
 	
-	/* adjust_numerical_app_setting()
-	 * passes through to adjust_app_setting() with $settingval_text as null
-	 * on success, returns true
-	 * on failure, returns false
+	/* Function: adjust_numerical_app_setting()
+	   Calls adjust_app_setting() with settingval_text as null
+	   
+	   Parameters:
+	   $settingname - string giving the name of the new setting
+	   $settingval_num - integer value of the setting for settings that take numbers
+	 
+	   Returns:
+	   - TRUE on success
+	   - FALSE on failure
 	 */
 	function adjust_numerical_app_setting($settingname, $settingval_num)
 	{
 		return adjust_app_setting($settingname, $settingval_num, null);
 	}
 	
-	/* adjust_text_app_setting()
-	 * passes through to adjust_app_setting() with $settingval_num as null
-	 * on success, returns true
-	 * on failure, returns false
+	/* Function: adjust_text_app_setting()
+	   Calls adjust_app_setting() with settingval_num as null
+	   
+	   Parameters:
+	   $settingname - string giving the name of the new setting
+	   $settingval_text - string value of the setting for settings that take text
+	 
+	   Returns:
+	   - TRUE on success
+	   - FALSE on failure
 	 */
 	function adjust_text_app_setting()
 	{
 		return adjust_app_setting($settingname, null, $settingval_text);
 	}
 	
-	/* get_hosts()
-	 *	parameters:
-	 *		$username = NetID or ChemID of user
-	 * finds and returns array of hostnames the given user has requested access to
-	 * if no hosts are associated with user, returns null
+	/* Function: get_hosts()
+	   Gets array of hostnames to which the given user has requested access
+	
+	   Parameters:
+	   $username - NetID of user
+	   
+	   Returns:
+	   - $hosts
+	   - NULL if no hosts are associated with user
 	 */
 	function get_hosts($username)
 	{
@@ -1989,15 +2118,18 @@
 		return null;
 	}
 	
-	/* add_host()
-	 *	parameters:
-	 *		$hostname = plaintext name of the host
-	 *		$department_code = shortcode of the department associated with the host (eg. 'CHEM', 'AERO')
-	 *		$host_desc = description of the host (optional)
-	 * adds a host with the given name, description, and department to the list of hosts
-	 * on success, returns true
-	 * on failure, returns false
-	 * if a host with the given name already exists, returns the host_id of that host
+	/* Function: add_host()
+	   Adds a host with the given name, description, and department to the list of hosts
+	
+	   Parameters:
+	   $hostname - plaintext name of the host
+	   $department_code - shortcode of the department associated with the host (eg. 'CHEM', 'AERO')
+	   $host_desc - description of the host (optional)
+	 
+	   Returns: 
+	   - TRUE on success
+	   - FALSE on failure
+	   - $host_id[‘host_id’] if a host with the given name already exists
 	 */
 	function add_host($hostname, $department_code, $host_desc=null)
 	{
@@ -2013,15 +2145,17 @@
 		return mysqli_query($MYSQL_connection,"INSERT INTO $table_name (hostname, department_id, host_description) VALUES ($hostname, $department_id, $host_desc);");
 	}
 	
-	/* remove_host()
-	 *	parameters:
-	 *		$hostname = plaintext name of host
-	 * removes a host from the list of available hosts
-	 * also removes all entries on the 'User_Host_MAP' database table referencing the given host
-	 * on success, returns true
-	 * on failure, returns false
-	 * if no host exists with given name, returns true
-	 * if removal of 'User_Host_MAP' entries fails, returns false
+	/* Function: remove_host()
+	   Removes a host from the list of available hosts
+	 
+	   Also removes all entries on the 'User_Host_MAP' database table referencing the given host
+	
+	   Parameters:
+	   $hostname - plaintext name of host
+
+	   Returns:
+	   - TRUE on success, or if no host exists with given name
+	   - FALSE on failure, or if removal of 'User_Host_MAP' entries fails
 	 */
 	function remove_host($hostname)
 	{
@@ -2034,15 +2168,18 @@
 		return false;
 	}
 	
-	/* adjust_host_access()
-	 *	parameters:
-	 *		$username = NetID or ChemID of user
-	 *		$hostname = plaintext name of host
-	 *		$host_status = string defining action ("approve", "deny", "revoke")
-	 * adjusts user's host access status
-	 * on success, returns true
-	 * on failure, returns false
-	 * if user has no mapping to the given host, returns null
+	/* Function: adjust_host_access()
+	   Accepts calls from other functions in order to adjust user's host access status
+	   
+	   Parameters:
+	   $username - NetID of user
+	   $hostname - plaintext name of host
+	   $host_status - string defining action ("approve", "deny", "revoke")
+
+	   Returns:
+	   - TRUE on success
+	   - FALSE on failure
+	   - NULL if user has no mapping to the given host
 	 */
 	function adjust_host_access($username, $hostname, $host_status)
 	{
@@ -2069,48 +2206,66 @@
 		return false;
 	}
 	
-	/* approve_host_access()
-	 * passes through to adjust_host_access() with $host_status set to "approve"
-	 * on success, returns true
-	 * on fail, returns false
-	 * if no mapping exists between the given user and host, returns null
+	/* Function: approve_host_access()
+	   Calls adjust_host_access() using 'approve' as the $host_status
+	 
+	   Parameters:
+	   $username - NetID of user
+	   $hostname - plaintext name of host
+	   
+	   - TRUE on success
+	   - FALSE on failure
+	   - NULL if user has no mapping to the given host
 	 */
 	function approve_host_access($username, $hostname)
 	{
 		return adjust_host_access($username, $hostname, "approve");
 	}
 	
-	/* deny_host_access()
-	 * passes through to adjust_host_access() with $host_status set to "deny"
-	 * on success, returns true
-	 * on fail, returns false
-	 * if no mapping exists between the given user and host, returns null
+	/* Function: deny_host_access()
+	   Calls adjust_host_access() using 'deny' as the $host_status
+	 
+	   Parameters:
+	   $username - NetID of user
+	   $hostname - plaintext name of host
+	   
+	   - TRUE on success
+	   - FALSE on failure
+	   - NULL if user has no mapping to the given host
 	 */
 	function deny_host_access($username, $hostname)
 	{
 		return adjust_host_access($username, $hostname, "deny");
 	}
 	
-	/* revoke_host_access()
-	 * passes through to adjust_host_access() with $host_status set to "revoke"
-	 * on success, returns true
-	 * on fail, returns false
-	 * if no mapping exists between the given user and host, returns null
+	/* Function: revoke_host_access()
+	   Calls adjust_host_access() using 'revoke' as the $host_status
+	 
+	   Parameters:
+	   $username - NetID of user
+	   $hostname - plaintext name of host
+	   
+	   - TRUE on success
+	   - FALSE on failure
+	   - NULL if user has no mapping to the given host
 	 */
 	function revoke_host_access($username, $hostname)
 	{
 		return adjust_host_access($username, $hostname, "revoke");
 	}
 	
-	/* add_group_manager()
-	 *	parameters:
-	 *		$username = NetID or ChemID of user
-	 *		$groupname = plaintext name of group
-	 *		$username_mod = NetID or ChemID of user submitting change
-	 * adds a user/group mapping to the 'User_Group_Admin_MAP' database table
-	 * on success, returns true
-	 * on failure, returns false
-	 * if mapping already exists, returns true but does not log the assign_user_id or assign_date
+	/* Function: add_group_manager()
+	   Adds a user/group mapping to the 'User_Group_Admin_MAP' database table
+	   
+	   Parameters:
+	   $username - NetID of user
+	   $groupname - plaintext name of group
+	   $username_mod - NetID of user submitting change
+
+	   Returns:
+	   - TRUE on success
+	   - FALSE on failure
+	   - NULL if mapping already exists (does not log the assign_user_id or assign_date)
 	 */
 	function add_group_manager($username, $groupname, $username_mod)
 	{
@@ -2128,14 +2283,16 @@
 		return mysqli_query($MYSQL_connection,"INSERT INTO $table_name (user_id, group_id, assign_date, assign_user_id) VALUES ($user_id, $group_id, (SELECT NOW()), $assign_user_id);");
 	}
 	
-	/* remove_group_manager()
-	 *	parameters:
-	 *		$username = NetID or ChemID of user
-	 *		$groupname = plaintext name of group
-	 * removes a user/group mapping from the 'User_Group_Admin_MAP' database table
-	 * on success, returns true
-	 * on failure, returns false
-	 * if mapping does not exist, returns true
+	/* Function: remove_group_manager()
+	   Removes a user/group mapping from the 'User_Group_Admin_MAP' database table
+	   
+	   Parameters:
+	   $username - NetID of user
+	   $groupname - plaintext name of group
+
+	   Returns:
+	   - TRUE on success, or if mapping does not exist
+	   - FALSE on failure
 	 */
 	function remove_group_manager($username, $groupname)
 	{
@@ -2152,12 +2309,15 @@
 		return mysqli_query($MYSQL_connection,"DELETE FROM $table_name WHERE (user_id=$user_id AND group_id=$group_id);");
 	}
 	
-	/* get_manager_sponsors()
-	 *	parameters:
-	 *		$username_manager = NetID or ChemID of a sponsor manager
-	 * finds all sponsors for whom the given manager is authorized
-	 * returns an array with the NetID's or ChemID's of the sponsors
-	 * if the user does not exist as a manger for any sponsors, returns null
+	/* Function: get_manager_sponsors()
+	   Gets all sponsors for whom the given manager is authorized
+	 
+	   Parameters:
+	   $username_manager - NetID of a sponsor manager
+
+	   Returns:
+	   - $sponsors array with the NetID's of sponsors
+	   - NULL if the user does not exist as a manger for any sponsors
 	 */
 	function get_manager_sponsors($username_manager)
 	{
@@ -2181,12 +2341,15 @@
 		return null;
 	}
 	
-	/* get_sponsored_managers()
-	 *	parameters:
-	 *		$username_sponsor = NetID or ChemID of a sponsor
-	 * finds all managers authorized by the given sponsor
-	 * returns an array with the NetID's or ChemID's of the managers
-	 * if the user does not exist as a sponsor for any managers, returns null
+	/* Function: get_sponsored_managers()
+	   Gets all managers for the given sponsor
+	 
+	   Parameters:
+	   $username_sponsor - NetID of a sponsor
+	 
+	   Returns: 
+	   - $managers array with the NetIDs of the managers
+	   - NULL if the user does not exist as a sponsor for any managers
 	 */
 	function get_sponsored_managers($username_sponsor)
 	{
@@ -2214,17 +2377,21 @@
 	/* Group: Group Manager Functions */
 	/*------------------------------------------------------------------------------------------------*/
 	
-	/* modify_group_access()
-	 *	parameters:
-	 *		$username = NetID or ChemID of user
-	 *		$groupname = plaintext name of group
-	 *		$username_mod = NetID or ChemID of user submitting the request
-	 *		$access_status = string defining action ("approve", "deny", "renew", "revoke", "comment")
-	 *		$comment = string containing an administrator comment
-	 * modifies the access of the given user/group mapping
-	 * on success, returns true
-	 * on failure, returns false
-	 * if no mapping exists between the given user and group, returns null
+	/* Function: modify_group_access()
+	   Accepts calls from other functions in order to modify the access of the given user/group mapping
+	
+	   Parameters:
+	   $username - NetID of user
+	   $groupname - plaintext name of group
+	   $username_mod - NetID of user submitting the request
+	   $access_status - string defining action ('approve', 'deny', 'renew', 'revoke', 'comment')
+	   $comment - string containing an administrator comment
+	   $expire_date - date access will expire
+	 
+	   Returns: 
+	   - TRUE on success
+	   - FALSE on failure
+	   - NULL if no mapping exists between the given user and group
 	 */
 	function modify_group_access($username, $groupname, $username_mod, $access_status, $comment, $expire_date)
 	{
@@ -2256,66 +2423,108 @@
 		return false;
 	}
 	
-	/* approve_group_access()
-	 * passes through to modify_group_access() with $access_status as "approve"
-	 * on success, returns true
-	 * on failure, returns false
-	 * if no mapping exists between the given user and group, returns null
+	/* Function: approve_group_access()
+	   Calls modify_group_access() with using 'approve' as the $access_status
+	   
+	   Parameters:
+	   $username - NetID of user
+	   $groupname - plaintext name of group
+	   $username_mod - NetID of user submitting the request
+	   $expire_date - date access will expire
+	   
+	   Returns:
+	   - True on success
+	   - FALSE on failure
+	   - NULL if no mapping exists between the given user and group
 	 */
 	function approve_group_access($username, $groupname, $username_mod, $expire_date)
 	{
 		return modify_group_access($username, $groupname, $username_mod, "approve", "", $expire_date);
 	}
 	
-	/* deny_group_access()
-	 * passes through to modify_group_access() with $access_status as "deny"
-	 * on success, returns true
-	 * on failure, returns false
-	 * if no mapping exists between the given user and group, returns null
+	/* Function: deny_group_access()
+	   Calls modify_group_access() with using 'deny' as the $access_status
+	   
+	   Parameters:
+	   $username - NetID of user
+	   $groupname - plaintext name of group
+	   $username_mod - NetID of user submitting the request
+	   
+	   Returns:
+	   - True on success
+	   - FALSE on failure
+	   - NULL if no mapping exists between the given user and group	
 	 */
 	function deny_group_access($username, $groupname, $username_mod)
 	{
 		return modify_group_access($username, $groupname, $username_mod, "deny", "", null);
 	}
 	
-	/* renew_group_access()
-	 * passes through to modify_group_access() with $access_status as "renew"
-	 * on success, returns true
-	 * on failure, returns false
-	 * if no mapping exists between the given user and group, returns null
+	/* Function: renew_group_access()
+	   Calls modify_group_access() with using 'renew' as the $access_status
+	   
+	   Parameters:
+	   $username - NetID of user
+	   $groupname - plaintext name of group
+	   $username_mod - NetID of user submitting the request
+	   $expire_date - date access will expire
+	   
+	   Returns:
+	   - True on success
+	   - FALSE on failure
+	   - NULL if no mapping exists between the given user and group
 	 */
 	function renew_group_access($username, $groupname, $username_mod, $expire_date)
 	{
 		return modify_group_access($username, $groupname, $username_mod, "renew", "", $expire_date);
 	}
 	
-	/* revoke_group_access()
-	 * passes through to modify_group_access() with $access_status as "revoke"
-	 * on success, returns true
-	 * on failure, returns false
-	 * if no mapping exists between the given user and group, returns null
+	/* Function: revoke_group_access()
+	   Calls modify_group_access() with using 'revoke' as the $access_status
+	   
+	   Parameters:
+	   $username - NetID of user
+	   $groupname - plaintext name of group
+	   $username_mod - NetID of user submitting the request
+	   
+	   Returns:
+	   - True on success
+	   - FALSE on failure
+	   - NULL if no mapping exists between the given user and group
 	 */
 	function revoke_group_access($username, $groupname, $username_mod)
 	{
 		return modify_group_access($username, $groupname, $username_mod, "revoke", "", null);
 	}
 	
-	/* comment_group_access()
-	 * passes through to modify_group_access() with $access_status as "comment"
-	 * on success, returns true
-	 * on failure, returns false
-	 * if no mapping exists between the given user and group, returns null
+	/* Function: comment_group_access()
+	   Calls modify_group_access() with using 'comment' as the $access_status
+	   
+	   Parameters:
+	   $username - NetID of user
+	   $groupname - plaintext name of group
+	   $username_mod - NetID of user submitting the request
+	   $comment - string containing an administrator comment
+	   
+	   Returns:
+	   - True on success
+	   - FALSE on failure
+	   - NULL if no mapping exists between the given user and group
 	 */
 	function comment_group_access($username, $groupname, $username_mod, $comment)
 	{
-		return modify_group_access($username, $groupname, $username_mod, "comment", "", null);
+		return modify_group_access($username, $groupname, $username_mod, "comment", $comment, null);
 	}
 	
-	/* get_users_in_group()
-	 *	parameters:
-	 *		$groupname = plaintext name of group
-	 * returns an array of the NetID's or ChemIDs of all users with associations for the given group
-	 * if group has no users, returns null
+	/* Function: get_users_in_group()
+	   Gets NetIDs of all users with associations for the given group
+	   
+	   Parameters:
+	   $groupname - plaintext name of group
+	   
+	   Returns:
+	   - $users array of NetIDs
+	   - FALSE if group has no users
 	 */
 	function get_users_in_group($groupname)
 	{
@@ -2342,11 +2551,15 @@
 		return $users;
 	}
 	
-	/* get_groups_for_user()
-	 *	parameters:
-	 *		$username = NetID or ChemID for user
-	 * returns an array of the group names with associations to the given user
-	 * if user has no groups, returns false
+	/* Function: get_groups_for_user()
+	   Gets group names with associations to the given user
+	   
+	   Parameters:
+	   $username = NetID for user
+	   
+	   Returns:
+	   - $groups array of group names
+	   - FALSE if user has no groups
 	 */
 	function get_groups_for_user($username)
 	{
