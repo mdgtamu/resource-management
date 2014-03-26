@@ -1438,7 +1438,7 @@
 			{
 				case WARNING:
 				case EXPIRED:
-					return true;
+					return mysqli_query($MYSQL_connection, "UPDATE User_Host_MAP SET (status_id=". PENDING .", modify_date=(NOW())) WHERE (user_id=$user_id AND host_id=$host_id);");
 					break;
 				case PENDING:
 				case ACTIVE:
@@ -2197,11 +2197,11 @@
 		
 		if($host_status == "approve")
 		{
-			return mysqli_query($MYSQL_connection,"UPDATE User_Host_MAP SET status_id=" . ACTIVE . " WHERE (user_id=$user_id AND host_id=$host_id);");
+			return mysqli_query($MYSQL_connection,"UPDATE User_Host_MAP SET (status_id=" . ACTIVE . ", modify_date=(NOW())) WHERE (user_id=$user_id AND host_id=$host_id);");
 		}
 		else if($host_status == "deny" || $host_status == "revoke")
 		{
-			return mysqli_query($MYSQL_connection,"UPDATE User_Host_MAP SET status_id=" . DENIED . " WHERE (user_id=$user_id AND host_id=$host_id);");
+			return mysqli_query($MYSQL_connection,"UPDATE User_Host_MAP SET (status_id=" . DENIED . ", modify_date=(NOW())) WHERE (user_id=$user_id AND host_id=$host_id);");
 		}
 		return false;
 	}
